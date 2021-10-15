@@ -5,6 +5,8 @@ document.getElementById("Types").addEventListener("click", typeClick)
 //seraching by submit from input
 async function  pokemonSearch (){
     try{
+        let list=document.getElementById("pokeList")
+        list.innerText=""
         let search =document.getElementById("search").value
         const respone= await axios.get(`https://pokeapi.co/api/v2/pokemon/${search}/`)
         const data=await respone;
@@ -26,9 +28,18 @@ async function  pokemonSearch (){
         document.getElementById("img").setAttribute("alt",search);
     }
     catch{
-        return alert ("not found")
+        let list=document.getElementById("pokeList")
+        list.innerText="pokemon not found"
     }
 }
+//by clicking enter
+var input = document.getElementById("search");
+input.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("searchButton").click();
+    }
+});
 //change the img by putting the mouse over
 async function changeSrc(){
     let search =event.target.alt
@@ -46,18 +57,21 @@ async function backSrc(){
 }
 //print all pokemons with the same type
 async function typeClick(){
-    if(event.target.textContent!==Types){
-        let type=(event.target.textContent) 
-        const respone= await axios.get(`https://pokeapi.co/api/v2/type/${type}`)
-        const data=await respone;
-    let list=document.getElementById("pokeList")
-    list.innerText=""
-    for (let poke of data.data.pokemon){
-        let li=document.createElement("li")
-        li.innerText=poke.pokemon.name
-        li.addEventListener("click",searchByClick)
-        list.appendChild(li)
-    }    
+    try{
+            let type=(event.target.textContent) 
+            const respone= await axios.get(`https://pokeapi.co/api/v2/type/${type}`)
+            const data=await respone;
+        let list=document.getElementById("pokeList")
+        list.innerText=""
+        for (let poke of data.data.pokemon){
+            let li=document.createElement("li")
+            li.innerText=poke.pokemon.name
+            li.addEventListener("click",searchByClick)
+            list.appendChild(li)
+        }    
+        }
+    catch{
+        alert("click only the types names")
     }
 }
 //by clicking the name he comes up in the web 
@@ -81,4 +95,6 @@ async function searchByClick(){
     document.getElementById("Weight").innerText="Weight :" +Weight;
     document.getElementById("img").setAttribute("src",src);
     document.getElementById("img").setAttribute("alt",search);
-    }
+    let list=document.getElementById("pokeList")
+    list.innerText=""
+}
