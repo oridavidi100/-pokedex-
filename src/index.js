@@ -1,6 +1,7 @@
 document.getElementById("img").addEventListener("mouseover",changeSrc)//when the mouse over change the image
 document.getElementById("img").addEventListener("mouseleave",backSrc)//when the mouse leave change the image again
 document.getElementById("searchButton").addEventListener("click",pokemonSearch);//search button
+document.getElementById("Types").addEventListener("click", typeClick)
 //seraching by submit from input
 async function  pokemonSearch (){
     try{
@@ -10,12 +11,11 @@ async function  pokemonSearch (){
         const name=data.data.name;
         const Height=data.data.height;
         const Weight=data.data.weight;
-        document.getElementById("Types").innerText=""
+        document.getElementById("Types").innerText="Types :"
         let Types=document.getElementById("Types");
         for(let typeindex of data.data.types){
             const typ =document.createElement("span")
             typ.innerText=typeindex.type.name +" "
-            typ.addEventListener("click", typeClick)
             Types.appendChild(typ)
         }
         const src=data.data.sprites.front_default
@@ -46,16 +46,18 @@ async function backSrc(){
 }
 //print all pokemons with the same type
 async function typeClick(){
-    let type=(event.target.textContent) 
-    const respone= await axios.get(`https://pokeapi.co/api/v2/type/${type}`)
-    const data=await respone;
+    if(event.target.textContent!==Types){
+        let type=(event.target.textContent) 
+        const respone= await axios.get(`https://pokeapi.co/api/v2/type/${type}`)
+        const data=await respone;
     let list=document.getElementById("pokeList")
+    list.innerText=""
     for (let poke of data.data.pokemon){
         let li=document.createElement("li")
         li.innerText=poke.pokemon.name
         li.addEventListener("click",searchByClick)
         list.appendChild(li)
-
+    }    
     }
 }
 //by clicking the name he comes up in the web 
@@ -66,12 +68,11 @@ async function searchByClick(){
     const name=data.data.name;
     const Height=data.data.height;
     const Weight=data.data.weight;
-    document.getElementById("Types").innerText=""
+    document.getElementById("Types").innerText="Types :"
     let Types=document.getElementById("Types");
     for(let typeindex of data.data.types){
         const typ =document.createElement("span")
         typ.innerText=typeindex.type.name +" "
-        typ.addEventListener("click", typeClick)
         Types.appendChild(typ)
     }
     const src=data.data.sprites.front_default
