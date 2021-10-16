@@ -2,9 +2,24 @@ document.getElementById("img").addEventListener("mouseover",changeSrc)//when the
 document.getElementById("img").addEventListener("mouseleave",backSrc)//when the mouse leave change the image again
 document.getElementById("searchButton").addEventListener("click",pokemonSearch);//search button
 document.getElementById("Types").addEventListener("click", typeClick)
+let loader=new Image(200,250)
+loader.src="https://media4.giphy.com/media/DRfu7BT8ZK1uo/giphy.gif"
+
+function clear(){ 
+document.getElementById("name").innerText="Name :" ;
+document.getElementById("Height").innerText="Height :" ;
+document.getElementById("Weight").innerText="Weight :" ;
+document.getElementById("Types").innerText="Types :"
+document.getElementById("img").setAttribute("src","");
+document.getElementById("img").setAttribute("alt","")
+
+}
+
 //seraching by submit from input
 async function  pokemonSearch (){
+    clear()
     try{
+        document.getElementById("loader").appendChild(loader)
         let list=document.getElementById("pokeList")
         list.innerText=""
         let search =document.getElementById("search").value
@@ -26,14 +41,34 @@ async function  pokemonSearch (){
         document.getElementById("Weight").innerText="Weight :" +Weight;
         document.getElementById("img").setAttribute("src",src);
         document.getElementById("img").setAttribute("alt",search);
+        setTimeout(() => {
+            document.getElementById("loader").removeChild(loader)
+            },1000)
     }
     catch{
+        setTimeout(() => {document.getElementById("loader").removeChild(loader)
+        }, 500); 
         let list=document.getElementById("pokeList")
         list.innerText="pokemon not found"
+        badGuy()
+
     }
 }
+let bad=new Image(250,200)
+bad.src="https://pm1.narvii.com/5752/dfa795a403b03df267e44ab0a223fd50bf86c3c3_hq.jpg"
+
+function badGuy(){
+    //setTimeout(() => {
+        document.getElementById("badguy").appendChild(bad)
+    //}, 1500); 
+    setTimeout(() =>
+        document.getElementById("badguy").removeChild(bad),
+        2000)
+    
+
+}
 //by clicking enter
-var input = document.getElementById("search");
+let input = document.getElementById("search");
 input.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
         event.preventDefault();
