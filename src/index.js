@@ -23,19 +23,25 @@ async function  pokemonSearch (){
         let list=document.getElementById("pokeList")
         list.innerText=""
         let search =document.getElementById("search").value
-        const respone= await axios.get(`https://pokeapi.co/api/v2/pokemon/${search}/`)
-        const data=await respone;
-        const name=data.data.name;
-        const Height=data.data.height;
-        const Weight=data.data.weight;
+        const respone= await fetch(`https://pokeapi.co/api/v2/pokemon/${search}/`,{
+            method:"GET",
+            headers: {  
+                Accept: "application/json",
+                "Content-Type": "application/json" 
+            }
+        })
+        const data=await respone.json();
+        const name=data.name;
+        const Height=data.height;
+        const Weight=data.weight;
         document.getElementById("Types").innerText="Types :"
         let Types=document.getElementById("Types");
-        for(let typeindex of data.data.types){
+        for(let typeindex of data.types){
             const typ =document.createElement("span")
             typ.innerText=typeindex.type.name +" "
             Types.appendChild(typ)
         }
-        const src=data.data.sprites.front_default
+        const src=data.sprites.front_default
         document.getElementById("name").innerText="Name :" +name;
         document.getElementById("Height").innerText="Height :" +Height;
         document.getElementById("Weight").innerText="Weight :" +Weight;
@@ -44,16 +50,16 @@ async function  pokemonSearch (){
         setTimeout(() => {
             document.getElementById("loader").removeChild(loader)
             },1000)
-    }
+   }
     catch{
         setTimeout(() => {document.getElementById("loader").removeChild(loader)
-        }, 500); 
+         }, 500); 
         let list=document.getElementById("pokeList")
         list.innerText="pokemon not found"
         badGuy()
 
-    }
-}
+     }
+ }
 let bad=new Image(250,200)
 bad.src="https://pm1.narvii.com/5752/dfa795a403b03df267e44ab0a223fd50bf86c3c3_hq.jpg"
 
