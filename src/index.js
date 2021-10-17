@@ -19,7 +19,7 @@ document.getElementById("img").setAttribute("alt","")
 async function  pokemonSearch (){
     clear()
     try{
-        document.getElementById("loader").appendChild(loader)
+        document.getElementById("loader").appendChild(loader).toLowerCase();
         let list=document.getElementById("pokeList")
         list.innerText=""
         let search =document.getElementById("search").value
