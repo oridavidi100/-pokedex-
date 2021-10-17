@@ -19,10 +19,11 @@ document.getElementById("img").setAttribute("alt","")
 async function  pokemonSearch (){
     clear()
     try{
-        document.getElementById("loader").appendChild(loader).toLowerCase();
+        document.getElementById("loader").appendChild(loader)
         let list=document.getElementById("pokeList")
         list.innerText=""
-        let search =document.getElementById("search").value
+        let search =document.getElementById("search").value;
+        search=search.toLowerCase();
         const respone= await fetch(`https://pokeapi.co/api/v2/pokemon/${search}/`,{
             method:"GET",
             headers: {  
@@ -50,7 +51,7 @@ async function  pokemonSearch (){
         setTimeout(() => {
             document.getElementById("loader").removeChild(loader)
             },1000)
-   }
+  }
     catch{
         setTimeout(() => {document.getElementById("loader").removeChild(loader)
          }, 500); 
