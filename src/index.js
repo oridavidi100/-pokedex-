@@ -1,3 +1,5 @@
+// import {take} from "./login"
+// console.log(take)
 document.getElementById("img").addEventListener("mouseover",changeSrc)//when the mouse over change the image
 document.getElementById("img").addEventListener("mouseleave",backSrc)//when the mouse leave change the image again
 document.getElementById("searchButton").addEventListener("click",pokemonSearch);//search button
