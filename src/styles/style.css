@@ -10,3 +10,6 @@ body{
 ul{
 list-style: none;
 }
+#pokeList{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
