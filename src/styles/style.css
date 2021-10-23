@@ -13,3 +13,13 @@ list-style: none;
 #pokeList{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+input{
+    border: 0.1em solid;
+    border-radius: 1em;
+    text-align: center;
+    font-style: italic;
+    letter-spacing: 0.05em;
+    transition: all .5s ease-in-out;
+    background-color: #eccdb3;
+
+}

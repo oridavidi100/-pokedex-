@@ -72,7 +72,7 @@ async function  pokemonSearchId (){
  }
 
 
-
+//searching by name
  async function  pokemonSearchName (){
     clear()
     try{
@@ -81,6 +81,8 @@ async function  pokemonSearchId (){
         list.innerText=""
         let inputName=document.getElementById("searchByName").value
         let username=document.getElementById("username").value
+        if (username==="")
+        {return alerting("please enter username")} 
         const respone= await axios.get(`http://localhost:3000/pokemon/get/${inputName}`,{
             headers: { 
                 "username": username,
@@ -181,20 +183,19 @@ async function backSrc(event){
 async function Catch(){
     let username=document.getElementById("username").value
     let id=data.id
-    console.log (username)
     try {
         const respone= await fetch(`http://localhost:3000/pokemon/catch/${id}`,{
-        method:"PUT",
-        body:JSON.stringify({pokemon:data}),
-        headers: { 
-            "username": username,   
-            'Content-Type': 'application/json'   
-         },
-    })
-    showCollection()
+            method:"PUT",
+            body:JSON.stringify({pokemon:data}),
+            headers: { 
+                "username": username,   
+                'Content-Type': 'application/json'   
+            },
+            })
+        showCollection()
     }
     catch{
-        alerting("you already catched this pokemon")
+       alerting("you already catched this pokemon")
     }
 }
 
@@ -226,13 +227,11 @@ async function release(){
 async function typeClick(event){
     //try{
             let type=(event.target.textContent) 
-            console.log(type)
             const respone= await axios.get(`http://localhost:3000/pokemon/type/${type}`,{
                 headers: { 
                     "username": username
             }})
             let pokenames=await respone;
-            console.log(pokenames)
             let list=document.getElementById("pokeList")
             list.innerText=`  ${type} pokemons :`
             for (let poke of pokenames.data){
@@ -259,7 +258,6 @@ async function showCollection(){
             "username": username,
     }})
     let pokemonCollection=(response.data)
-    console.log(pokemonCollection)
     for (let collect of pokemonCollection){
         let coll =document.createElement("span")
         let img =document.createElement("img")
@@ -301,5 +299,4 @@ async function searchByClick(event){
     document.getElementById("img").setAttribute("alt",search);
     let list=document.getElementById("pokeList")
     list.innerText=""
-    console.log(data.data)
 }
