@@ -61,11 +61,11 @@ async function  pokemonSearchId (){
             document.getElementById("loader").removeChild(loader)
             },1000)
   }
-    catch{
+    catch(error){
         setTimeout(() => {document.getElementById("loader").removeChild(loader)
          }, 500); 
         let list=document.getElementById("pokeList")
-        list.innerText="pokemon not found"
+        list.innerText=error.response.data.error
         badGuy()
 
      }
@@ -99,7 +99,7 @@ async function  pokemonSearchId (){
         setTimeout(() => {document.getElementById("loader").removeChild(loader)
          }, 500); 
         let list=document.getElementById("pokeList")
-        list.innerText="pokemon not found"
+        list.innerText=error.response.data.error
         badGuy()
 
      }
@@ -184,18 +184,18 @@ async function Catch(){
     let username=document.getElementById("username").value
     let id=data.id
     try {
-        const respone= await fetch(`http://localhost:3000/pokemon/catch/${id}`,{
-            method:"PUT",
-            body:JSON.stringify({pokemon:data}),
-            headers: { 
+        const respone= await axios.put(`http://localhost:3000/pokemon/catch/${id}`,
+            {"pokemon":data},
+            {headers: { 
                 "username": username,   
                 'Content-Type': 'application/json'   
-            },
-            })
-        showCollection()
+            }},
+            )
+       showCollection()
     }
-    catch{
-       alerting("you already catched this pokemon")
+    catch(error){
+        console.log(error.response.data.error)
+       alerting(error.response.data.error)
     }
 }
 
@@ -212,8 +212,8 @@ async function release(){
         })
         showCollection()
          }
-    catch{
-        alerting("you not catched this pokemon")
+    catch(error){
+        alerting(error.response.data.error)
     }
 }
 
