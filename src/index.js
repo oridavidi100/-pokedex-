@@ -266,7 +266,6 @@ async function showCollection(){
         coll.innerText=JSON.parse(collect).name 
         collection.appendChild(img)
         collection.appendChild(coll)
-
     }
 }
 
